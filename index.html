@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Program Konversi Bilangan Desimal</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <header>
+      <h1 style="text-align: center">KONVERSI BILANGAN DESIMAL</h1>
+    </header>
+    <br />
+
+    <div>
+      <label for="select1">Pilih Konversi: </label> <br />
+      <select id="select1" onclick="tampilkanPilihan()">
+        <option value="Bilangan Biner:">Bilangan Desimal ke Bilangan Biner</option>
+        <option value="Bilangan Oktal:">Bilangan Desimal ke Bilangan Oktal</option>
+        <option value="Bilangan Heksadesimal:">Bilangan Desimal ke Bilangan Heksadesimal</option>
+      </select> <br /> <br />
+      <label for="number">Masukkan Angka:</label> <br />
+      <label for="number">(Untuk angka ribuan dan seterusnya, tulislah tanpa ., misal: 1000)</label> <br />
+      <input type="text" id="number" value=""> <br /> <br />
+      <button type="button" id="button" onclick="tampilkanhasil()">Konversi</button>
+      <br />
+      <p>Bilangan Desimal:</p>
+      <p id="desimal">0</p>
+      <p id="tulisankonversi">Bilangan Biner:</p>
+      <p id="konversi">0</p>
+    </div>
+
+    <script>
+      function tampilkanPilihan(){
+        var Pilihan = document.getElementById("select1").value;
+        document.getElementById("tulisankonversi").innerHTML = Pilihan;
+      }
+      function tampilkanhasil(){
+        var Pilihan = document.getElementById("select1").value;
+        var angkaDesimal = document.getElementById("number").value;
+        var angkaDesimalSementara = angkaDesimal;
+        var arrayBiner = [];
+        var angkaKonversi = 0;
+        var i = 0;
+        var j = 1;
+        var binerSempurna = () => {
+          if (j % 4 === 1){
+            arrayBiner.push(0);
+            arrayBiner.push(0);
+            arrayBiner.push(0);
+          } else if (j % 4 === 2){
+            arrayBiner.push(0);
+            arrayBiner.push(0);
+          } else if (j % 4 === 3){
+            arrayBiner.push(0);
+          }
+        }
+        var prosesBiner = () => {
+          arrayBiner.push(angkaDesimalSementara % 2);
+          i += 1;
+          if (angkaDesimalSementara % 2 === 1) {
+            angkaDesimalSementara = angkaDesimalSementara / 2 - 0.5;
+          } else {
+            angkaDesimalSementara = angkaDesimalSementara / 2;
+          }
+        }
+
+        if (angkaDesimal.includes(',')) {
+          angkaDesimal = "NaN";
+          angkaKonversi = "NaN";
+        } else {
+          if (Pilihan=="Bilangan Biner:"){
+            switch(angkaDesimal){
+              case "0":
+                angkaKonversi = "0000";
+                break;
+              case "1":
+                angkaKonversi = "0001";
+                break;
+              default:
+                do {
+                  prosesBiner();
+                  if (i === 4){
+                    arrayBiner.push(" ");
+                    i = 0;
+                  }
+                  if (angkaDesimalSementara === 1){
+                    arrayBiner.push(1);
+                  }
+                  j += 1;
+                } while (angkaDesimalSementara !== 1);
+                binerSempurna();
+                arrayBiner.reverse();
+                angkaKonversi = arrayBiner.join('');
+            }
+          } else if (Pilihan=="Bilangan Oktal:"){
+            switch(angkaDesimal){
+              case "0":
+                angkaKonversi = "0";
+                break;
+              case "1":
+                angkaKonversi = "1";
+                break;
+              default:
+                var tabelOktal = ["000", "001", "010", "011", "100", "101", "110", "111"];
+                var bilOktal = [];
+                var prosesKonversi = () => {
+                  arrayBiner.reverse();
+                  bilOktal.push(tabelOktal.indexOf(arrayBiner.join('')));
+                  if (j % 9 === 0){
+                    bilOktal.push(" ");
+                  }
+                  i = 0;
+                  arrayBiner.splice(0);
+                };
+                do {
+                  prosesBiner();
+                  if (i === 3){
+                    prosesKonversi();
+                  }
+                  if (angkaDesimalSementara === 1){
+                    arrayBiner.push(1);
+                    j += 1;
+                    binerSempurna();
+                    if (j % 3 === 1){
+                      arrayBiner.push(0);
+                      arrayBiner.push(0);
+                    } else if (j % 3 === 2){
+                      arrayBiner.push(0);
+                    }
+                    if (arrayBiner.length > 3){
+                      arrayBiner.splice(3);
+                    }
+                    prosesKonversi();
+                  }
+                  j += 1;
+                } while (angkaDesimalSementara !== 1);
+                bilOktal.reverse();
+                angkaKonversi = bilOktal.join('');
+            }
+          } else {
+            switch(angkaDesimal){
+              case "0":
+                angkaKonversi = "0";
+                break;
+              case "1":
+                angkaKonversi = "1";
+                break;
+              default:
+                var sementara = 0;
+                var tabelHeksa = ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"];
+                var bilHeksa = [];
+                var prosesKonversi = () => {
+                  arrayBiner.reverse();
+                  sementara = tabelHeksa.indexOf(arrayBiner.join(''));
+                  if (sementara === 10){
+                    sementara = "A";
+                  } else if (sementara === 11){
+                    sementara = "B";
+                  } else if (sementara === 12){
+                    sementara = "C";
+                  } else if (sementara === 13){
+                    sementara = "D";
+                  } else if (sementara === 14){
+                    sementara = "E";
+                  } else if (sementara === 15){
+                    sementara = "F";
+                  }
+                  bilHeksa.push(sementara);
+                  if (j % 16 === 0){
+                    bilHeksa.push(" ");
+                  }
+                  i = 0;
+                  arrayBiner.splice(0);
+                };
+                do {
+                  prosesBiner();
+                  if (i % 4 === 0){
+                    prosesKonversi();
+                  }
+                  if (angkaDesimalSementara === 1){
+                    arrayBiner.push(1);
+                    j += 1;
+                    binerSempurna();
+                    prosesKonversi();
+                  }
+                  j += 1;
+                } while (angkaDesimalSementara !== 1);
+                bilHeksa.reverse();
+                angkaKonversi = bilHeksa.join('');
+            }
+          }
+        }
+
+        var hasilDesimal = document.getElementById("desimal");
+        var hasilKonversi = document.getElementById("konversi");
+        hasilDesimal.innerHTML = angkaDesimal;
+        hasilKonversi.innerHTML = angkaKonversi;
+      }
+    </script>
+  </body>
+</html>

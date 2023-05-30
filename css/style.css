@@ -1,0 +1,71 @@
+@font-face {
+  src: url(Montserrat-BoldItalic.ttf);
+  font-family: mont;
+}
+@font-face {
+  src: url(Roboto-MediumItalic.ttf);
+  font-family: rob;
+}
+@font-face {
+  src: url(BeVietnamPro-Medium.ttf);
+  font-family: be;
+}
+h1 {
+  font-family: mont;
+  font-style: white;
+}
+body {
+  font-family: be;
+  margin: 0;
+}
+#select1 {
+  font-family: rob;
+}
+#button {
+  font-family: rob;
+}
+#number {
+  font-family: rob;
+}
+header {
+  background: no-repeat left/cover url(bgheader.png);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #fff;
+  text-shadow: #000 0 0 .1em;
+}
+div{
+  padding-left: 20px;
+}
+@media screen and (max-width: 650px) {
+  h1{
+    font-size: 25px;
+  }
+  header{
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  div{
+    padding-left: 15px;
+  }
+  label{
+    font-size: 12px;
+  }
+  option{
+    font-size: 12px;
+  }
+  select{
+    font-size: 12px;
+  }
+  input{
+    font-size: 12px;
+  }
+  button{
+    font-size: 12px;
+  }
+  p{
+    font-size: 12px;
+  }
+}
